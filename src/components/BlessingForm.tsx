@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { useForm } from 'react-hook-form';
 import { Heart } from 'lucide-react';
 import { toast } from 'sonner';
+import { readGuestFromLocation } from '../guest';
 
 interface BlessingData {
   name: string;
@@ -11,7 +12,9 @@ interface BlessingData {
 
 export function BlessingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<BlessingData>();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<BlessingData>({
+    defaultValues: { name: readGuestFromLocation() },
+  });
   const scriptUrl = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL as string | undefined;
 
   const onSubmit = async (data: BlessingData) => {
@@ -49,27 +52,27 @@ export function BlessingForm() {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-xl mx-auto bg-white/60 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-blue-100"
+      className="max-w-xl mx-auto bg-white/60 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-lime-100"
     >
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-serif text-[#183d72] mb-2 font-semibold">
+          <label className="block text-sm font-serif text-[#4a5d23] mb-2 font-semibold">
             Your Name
           </label>
           <input
             {...register('name', { required: 'Name is required' })}
-            className="w-full px-4 py-3 rounded-xl border border-blue-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
+            className="w-full px-4 py-3 rounded-xl border border-lime-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7d8f4e]/50"
             placeholder="Name"
           />
         </div>
         <div>
-          <label className="block text-sm font-serif text-[#183d72] mb-2 font-semibold">
+          <label className="block text-sm font-serif text-[#4a5d23] mb-2 font-semibold">
             Your Wishes
           </label>
           <textarea
             {...register('message', { required: 'Please leave a message' })}
             rows={4}
-            className="w-full px-4 py-3 rounded-xl border border-blue-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-lime-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7d8f4e]/50 resize-none"
             placeholder="Share your blessings and advice for the couple..."
           />
         </div>
@@ -78,7 +81,7 @@ export function BlessingForm() {
           disabled={isSubmitting}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full py-4 bg-gradient-to-r from-[#25569a] to-[#183d72] text-white rounded-xl font-serif text-lg shadow-lg flex items-center justify-center gap-2"
+          className="w-full py-4 bg-gradient-to-r from-[#6b7f3a] to-[#4a5d23] text-white rounded-xl font-serif text-lg shadow-lg flex items-center justify-center gap-2"
         >
           {isSubmitting ? 'Sending Love...' : (
             <>
